@@ -5,6 +5,9 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 import site.markeep.bookmark.folder.entity.Folder;
+import site.markeep.bookmark.follow.entity.Follower;
+import site.markeep.bookmark.follow.entity.Following;
+import site.markeep.bookmark.pinn.entity.Pin;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -40,7 +43,7 @@ public class User  {
     private String profileImage;
 
     @Column(nullable = false)
-    private int signUpId;
+    private String loginMethod;
 
     private String accessToken;
 
@@ -55,6 +58,18 @@ public class User  {
     @OneToMany(mappedBy = "user")
     @Builder.Default
     private List<Folder> folders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    @Builder.Default
+    private List<Follower> followers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    @Builder.Default
+    private List<Following> followings = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    @Builder.Default
+    private List<Pin> pins = new ArrayList<>();
 
     public void setAccessToken(String accessToken){
         this.accessToken = accessToken;
