@@ -53,6 +53,7 @@ public class User  {
     @ColumnDefault("false")
     private boolean autoLogin;
 
+    @Column(nullable = false, unique = true)
     private String nickName;
 
     @OneToMany(mappedBy = "user")
