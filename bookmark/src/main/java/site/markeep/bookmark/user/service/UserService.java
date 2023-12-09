@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import site.markeep.bookmark.user.dto.request.JoinRequestDTO;
 import site.markeep.bookmark.user.dto.request.LoginRequestDTO;
 import site.markeep.bookmark.user.dto.response.LoginResponseDTO;
 import site.markeep.bookmark.user.entity.User;
@@ -24,7 +25,7 @@ public class UserService {
         
         // 1. dto에서 이메일 값을 뽑아서 가입여부 확인
         User user = userRepository
-                .findbyEmail(dto.getEmail())
+                .findByEmail(dto.getEmail())
                 .orElseThrow(
                         () -> new RuntimeException("가입된 회원이 아닙니다! 회원 가입을 진행해주세요.")
                 );
@@ -47,6 +48,14 @@ public class UserService {
                 .build();
 
 
+    }
+
+    public void join(JoinRequestDTO dto) {
+
+        String encodedPassword = encoder.encode(dto.getPassword());
+        dto.setPassword(encodedPassword);
+
+        userRepository.save(dto.toEntity(dto));
     }
 }
 
