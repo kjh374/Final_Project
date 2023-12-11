@@ -26,7 +26,7 @@ public class UserController {
     private final MailService mailService;
 
     @GetMapping("/login")
-    public ResponseEntity<?> login(LoginRequestDTO dto){
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO dto){
 
         try {
             LoginResponseDTO responseDTO = userService.login(dto);
@@ -41,10 +41,11 @@ public class UserController {
 
     @PostMapping("/join")
     public ResponseEntity<?> join(
-            @Validated JoinRequestDTO dto,
+            @Validated @RequestBody JoinRequestDTO dto,
             BindingResult result
     ) {
         log.info("/user/join POST! ");
+        log.info("JoinRequestDTO: {}", dto);
 
         if(result.hasErrors()){
             log.warn(result.toString());
@@ -78,22 +79,26 @@ public class UserController {
         return ResponseEntity.ok().body(mailService.sendMail(email));
     }
 
-    /*
-        - refreshToken
-        자동 로그인 한 사람이 죽은 accessToken을 들고 요청함
-        refreshToken이 있다면 새로운 토큰을 발급해줄거야
-        이거는 /user/login에서 하지못해
-        그럼 새로운 accessToken을 요구하는 요청을 받는 메서드를 작성해야함
-        근데? 이거를 생각해보면? /user에서,, 받아도 되는건가?
-        따로 api전용 컨트롤러를 만들어야하나?
-        ㄴㄴ /user에서 받아도 될 것 같음
-
-        - 그럼 /user/newtoken 에서의 내용이 뭐냐
-        먼저 받은 토큰에서
-     */
     @PostMapping("/user/new-token")
     public ResponseEntity<?> newToken(String accessToken){
         return null;
+    }
+
+    //password 재 설정시 인증번호 전송
+    @PutMapping
+    public ResponseEntity<?> passwordAuth(String email) {
+
+        if(email.trim().isEmpty()) {
+            return ResponseEntity.badRequest()
+                    .body("");
+        }
+        // 400 오류
+        if(userService.isDuplicate(email)) {
+            return ResponseEntity.badRequest()
+                    .body("미가입 이메일 입니다.");
+        }
+        //인증번호 반환 : - 200 ok
+        return ResponseEntity.ok().body(mailService.sendMail(email));
     }
 
 

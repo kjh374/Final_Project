@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class TokenProviderTest {
 
     @Test

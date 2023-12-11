@@ -1,5 +1,6 @@
 package site.markeep.bookmark.user.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
@@ -13,8 +14,6 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class LoginRequestDTO {
 
-    private Long id;
-
     @NotBlank
     @Email
     private String email;
@@ -22,6 +21,6 @@ public class LoginRequestDTO {
     @NotBlank
     private String password;
 
-    private boolean autoLoginCheck;
+    private boolean autoLogin;
 
 }

@@ -8,6 +8,8 @@ import site.markeep.bookmark.folder.entity.Folder;
 import site.markeep.bookmark.follow.entity.Follower;
 import site.markeep.bookmark.follow.entity.Following;
 import site.markeep.bookmark.pinn.entity.Pin;
+import site.markeep.bookmark.user.dto.request.JoinRequestDTO;
+import site.markeep.bookmark.user.dto.response.LoginResponseDTO;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -42,11 +44,7 @@ public class User  {
 
     private String profileImage;
 
-    @Column(nullable = false)
-    private String loginMethod;
-
-    private String accessToken;
-
+    @Column(unique = true)
     private String refreshToken;
 
     @Column(nullable = false)
@@ -71,10 +69,6 @@ public class User  {
     @OneToMany(mappedBy = "user")
     @Builder.Default
     private List<Pin> pins = new ArrayList<>();
-
-    public void setAccessToken(String accessToken){
-        this.accessToken = accessToken;
-    }
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;

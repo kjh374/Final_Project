@@ -20,7 +20,7 @@ public class TokenUserInfo {
 
     private String password;
 
-    private boolean autoLoginCheck;
+    private boolean autoLogin;
 
 
 }
