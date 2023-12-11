@@ -1,5 +1,7 @@
 
-# *.yml
+*.yml
+application.yml
+application.properties
 
 .gradle
 build/
