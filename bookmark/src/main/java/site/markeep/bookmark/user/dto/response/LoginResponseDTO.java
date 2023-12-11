@@ -4,6 +4,7 @@ package site.markeep.bookmark.user.dto.response;
 import lombok.*;
 import site.markeep.bookmark.folder.entity.Folder;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -26,5 +27,6 @@ public class LoginResponseDTO {
     private String refreshToken;
 
     private boolean autoLogin;
+
 
 }

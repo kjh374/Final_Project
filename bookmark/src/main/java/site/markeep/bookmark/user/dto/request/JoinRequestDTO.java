@@ -5,6 +5,7 @@ import site.markeep.bookmark.user.entity.User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 @Setter @Getter
 @ToString @EqualsAndHashCode
@@ -13,21 +14,25 @@ import javax.validation.constraints.NotBlank;
 @Builder
 public class JoinRequestDTO {
 
+    private Long id;
+
     @Email
     @NotBlank
     private String email;
 
     @NotBlank
+    @Size(min = 8, max = 50)
     private String password;
 
     @NotBlank
+    @Size(min = 2, max = 8)
     private String nickname;
 
     public User toEntity(JoinRequestDTO dto) {
         return User.builder()
-                .email(dto.getEmail())
-                .nickName(dto.getNickname())
-                .loginMethod("common")
+                .email(this.getEmail())
+                .nickName(this.getNickname())
+                .password(dto.getPassword())
                 .build();
 
     }

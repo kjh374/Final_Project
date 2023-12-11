@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 import site.markeep.bookmark.user.entity.User;
 import site.markeep.bookmark.user.repository.UserRefreshTokenRepository;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -39,9 +38,6 @@ public class TokenProvider {
 
     private UserRefreshTokenRepository userRefreshTokenRepository;
 
-
-    private User user;
-
     public TokenProvider() {
     }
 
@@ -49,7 +45,7 @@ public class TokenProvider {
     // 유저가 회원가입 후, 로그인 할 때 토큰을 제공 할 것임
 
     // accessToken 생성해서 리턴하는 메서드
-    public String createAccessToken(){
+    public String createAccessToken(User userEntity){
         // 이걸 총 2번 호출해서 accessToken과 refreshToken을 생성해서
         // refreshToken은 DB에 저장하고
         // accessToken은 로컬스토리지에 저장해야 한다.
@@ -59,7 +55,7 @@ public class TokenProvider {
 
         // 기존의 클레임 말고 추가로 더 받아야 하는 값 (= 유저의 이메일 값)
         Map<String, String> claims = new HashMap<>();
-        claims.put("email", user.getEmail());
+        claims.put("email", userEntity.getEmail());
 
         // 토큰 생성 동시에 리턴
         return Jwts.builder()
@@ -71,7 +67,7 @@ public class TokenProvider {
                 .setIssuer(ISSUER)
                 .setIssuedAt(new Date())
                 .setExpiration(expiry)
-                .setSubject(String.valueOf(user.getId()))
+                .setSubject(String.valueOf(userEntity.getId()))
                 .compact();
     };
 
@@ -86,7 +82,6 @@ public class TokenProvider {
 
         // 기존의 클레임 말고 추가로 더 받아야 하는 값 (= 유저의 이메일 값)
         Map<String, String> claims = new HashMap<>();
-        claims.put("email", user.getEmail());
 
         // 토큰 생성 동시에 리턴
         return Jwts.builder()
