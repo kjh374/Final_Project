@@ -44,7 +44,7 @@ out/
 *.env
 
 # dependencies
-/node_modules
+/bookmark-react/node_modules
 /.pnp
 .pnp.js
 
