@@ -92,7 +92,9 @@ public class UserController {
         먼저 받은 토큰에서
      */
     @PostMapping("/user/new-token")
-    public ResponseEntity<?> newToken(String accessToken)
+    public ResponseEntity<?> newToken(String accessToken){
+        return null;
+    }
 
 
 

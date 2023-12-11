@@ -10,6 +10,7 @@ import site.markeep.bookmark.user.dto.request.JoinRequestDTO;
 import site.markeep.bookmark.user.dto.request.LoginRequestDTO;
 import site.markeep.bookmark.user.dto.response.LoginResponseDTO;
 import site.markeep.bookmark.user.entity.User;
+import site.markeep.bookmark.user.repository.UserRefreshTokenRepository;
 import site.markeep.bookmark.user.repository.UserRepository;
 
 
@@ -21,13 +22,19 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final UserRefreshTokenRepository userRefreshTokenRepository;
+
+    private final TokenProvider tokenProvider;
+
     private final BCryptPasswordEncoder encoder;
 
-    private TokenProvider tokenProvider;
+    public LoginResponseDTO login(LoginRequestDTO dto) throws Exception {
 
-    public LoginResponseDTO login(LoginRequestDTO dto) {
+        // 이거는 id값으로 가져온 user 만들라고 시도 했던 로직
+//        User user = userRepository.findById(dto.getId())
+//                .filter(res -> encoder.matches())
 
-        // 1. dto에서 이메일 값을 뽑아서 가입여부 확인
+        // 1. dto에서 이메일 값을 뽑아서 가입 여부 확인
         User user = userRepository
                 .findByEmail(dto.getEmail())
                 .orElseThrow(

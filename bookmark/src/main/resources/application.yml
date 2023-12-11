@@ -35,3 +35,6 @@ logging.level:
 
 jwt:
   secret: eT6WX2r734qYIBDD8pdPdzMmQGifZpbwkE8SMFLBAKlFxmS9Pf0oBbjB2bVDgeF7QHMuu6yfMrQRqJ8F3WeRKw==
+  access-expiry: 1800000 # 30분
+  refresh-expiry: 86400000 # 24시간
+  issuer: choipasak
